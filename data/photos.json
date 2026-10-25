@@ -1,0 +1,40 @@
+{
+  "photos": [
+    {
+      "src": "assets/photos/p1.svg",
+      "title": "傍晚的城市",
+      "album": "城市与光",
+      "date": "2026-10-04"
+    },
+    {
+      "src": "assets/photos/p2.svg",
+      "title": "湖边与云",
+      "album": "城市与光",
+      "date": "2026-10-04"
+    },
+    {
+      "src": "assets/photos/p3.svg",
+      "title": "山间的路",
+      "album": "出去走走",
+      "date": "2026-09-21"
+    },
+    {
+      "src": "assets/photos/p4.svg",
+      "title": "春天的傍晚",
+      "album": "出去走走",
+      "date": "2026-09-21"
+    },
+    {
+      "src": "assets/photos/p5.svg",
+      "title": "书桌上的午后",
+      "album": "日常",
+      "date": "2026-08-15"
+    },
+    {
+      "src": "assets/photos/p6.svg",
+      "title": "整理书架的两个小时",
+      "album": "日常",
+      "date": "2026-08-15"
+    }
+  ]
+}

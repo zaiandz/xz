@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[青柠笔记]]></title>
+    <link>https://yourname.github.io/</link>
+    <description><![CDATA[写下代码，也写下生活。]]></description>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 21 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title><![CDATA[Vue3 组合式 API 实战：把复杂页面拆成可复用的 composable]]></title>
+      <link>https://yourname.github.io/article.html?slug=vue3-composition-api-practice</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=vue3-composition-api-practice</guid>
+      <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[前端]]></category>
+      <description><![CDATA[组合式 API 真正好用的地方，不是 setup 语法糖，而是你能把「状态 + 逻辑」打成一个个可测试、可复用的小函数。这篇文章用三个真实场景说明怎么拆。]]></description>
+    </item>
+    <item>
+      <title><![CDATA[我的效率系统：三个清单和一条硬性规则]]></title>
+      <link>https://yourname.github.io/article.html?slug=my-daily-efficiency-system</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=my-daily-efficiency-system</guid>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[效率]]></category>
+      <description><![CDATA[试过 GTD、番茄钟、各种待办 App，最后留下来的只有一个极简系统：今天、本周、以后。以及一条不能破的规则。]]></description>
+    </item>
+    <item>
+      <title><![CDATA[周末在杭州：一条适合发呆的路线]]></title>
+      <link>https://yourname.github.io/article.html?slug=a-weekend-in-hangzhou</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=a-weekend-in-hangzhou</guid>
+      <pubDate>Tue, 06 Oct 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[生活]]></category>
+      <description><![CDATA[不做攻略的两天：早上走西湖、中午吃面、下午在咖啡馆坐三个小时。记录一些比景点更有意思的细节。]]></description>
+    </item>
+    <item>
+      <title><![CDATA[三本书，改变了我写东西的方式]]></title>
+      <link>https://yourname.github.io/article.html?slug=books-that-changed-my-writing</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=books-that-changed-my-writing</guid>
+      <pubDate>Sun, 27 Sep 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[阅读]]></category>
+      <description><![CDATA[不是写作技巧书，而是三本让我明白「写清楚」比「写漂亮」更重要的书。]]></description>
+    </item>
+    <item>
+      <title><![CDATA[纯静态博客怎么上线：GitHub Pages 完整流程]]></title>
+      <link>https://yourname.github.io/article.html?slug=deploy-static-blog-with-github-pages</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=deploy-static-blog-with-github-pages</guid>
+      <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[前端]]></category>
+      <description><![CDATA[没有服务器、没有数据库，也能有一个能写作的个人博客。从建仓库到后台发布，一次讲清楚。]]></description>
+    </item>
+    <item>
+      <title><![CDATA[2026 上半年的读书笔记（节选）]]></title>
+      <link>https://yourname.github.io/article.html?slug=notes-on-reading-2026</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=notes-on-reading-2026</guid>
+      <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[阅读]]></category>
+      <description><![CDATA[把上半年读过的书里划线的句子抽出来，只留真正会想起的那几句。]]></description>
+    </item>
+    <item>
+      <title><![CDATA[一份可以照着做的周复盘模板]]></title>
+      <link>https://yourname.github.io/article.html?slug=weekly-review-template</link>
+      <guid isPermaLink="true">https://yourname.github.io/article.html?slug=weekly-review-template</guid>
+      <pubDate>Wed, 12 Aug 2026 00:00:00 GMT</pubDate>
+      <category><![CDATA[效率]]></category>
+      <description><![CDATA[每周日晚上花 20 分钟，回答五个问题。坚持一年之后，我做决定的犹豫少了很多。]]></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>后台管理 · 青柠笔记</title>
+<meta name="theme-color" content="#2f6fed">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<!-- ============ 登录 ============ -->
+<section class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-brand">
+      <span class="brand-mark">柠</span>
+      <div>
+        <h1>后台管理</h1>
+        <p>青柠笔记 · 内容管理</p>
+      </div>
+    </div>
+    <form id="loginForm" autocomplete="off">
+      <label class="field">
+        <span class="field-label">管理口令</span>
+        <input type="password" id="pwInput" placeholder="请输入后台口令" required>
+      </label>
+      <p class="login-error" id="loginError" hidden>口令不正确，请重试。</p>
+      <button class="btn-primary full" type="submit">登录后台</button>
+    </form>
+    <p class="login-hint">访客请不要登录喔</p>
+    <p class="login-hint"><a href="index.html">← 返回网站首页</a></p>
+  </div>
+</section>
+
+<!-- ============ 后台 ============ -->
+<div class="admin" id="adminApp" hidden>
+  <aside class="admin-side">
+    <div class="admin-side-brand">
+      <span class="brand-mark">柠</span>
+      <span>青柠笔记</span>
+    </div>
+    <nav class="admin-menu" id="adminMenu">
+      <button data-view="dashboard" class="active" type="button">概览</button>
+      <button data-view="posts" type="button">文章管理</button>
+      <button data-view="moments" type="button">说说管理</button>
+      <button data-view="photos" type="button">相册管理</button>
+      <button data-view="links" type="button">友链管理</button>
+      <button data-view="site" type="button">站点信息</button>
+      <button data-view="repo" type="button">发布设置</button>
+      <button data-view="help" type="button">使用说明</button>
+    </nav>
+    <div class="admin-side-foot">
+      <span class="conn-pill" id="connPill">未连接仓库</span>
+      <a href="index.html" target="_blank" rel="noopener">↗ 预览网站</a>
+      <button type="button" id="logoutBtn">退出登录</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-top">
+      <h2 id="viewTitle">概览</h2>
+      <div class="admin-top-actions" id="viewActions"></div>
+    </header>
+
+    <div class="toast" id="toast" hidden><span id="toastText"></span><button type="button" id="toastClose">×</button></div>
+
+    <!-- 概览 -->
+    <section class="view" data-view="dashboard">
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="card pad">
+        <h3 class="card-title">最近的文章</h3>
+        <div id="recentPosts"></div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">快捷操作</h3>
+        <div class="quick-grid">
+          <button class="quick" type="button" data-quick="new-post">＋ 写新文章</button>
+          <button class="quick" type="button" data-quick="moment">＋ 发一条说说</button>
+          <button class="quick" type="button" data-quick="photo">＋ 添加相册照片</button>
+          <button class="quick" type="button" data-quick="site">编辑站点信息</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 文章列表 -->
+    <section class="view" data-view="posts" hidden>
+      <!-- 离开编辑页但还没保存时的提示条 -->
+      <div class="card pad draft-resume" id="draftResume" hidden>
+        <div class="draft-resume-main">
+          <b>有一篇还没保存的文章</b>
+          <span class="muted small" id="draftResumeTitle"></span>
+        </div>
+        <div class="draft-resume-ops">
+          <button class="btn-primary" id="resumeDraft" type="button">继续编辑</button>
+          <button class="ghost" id="discardDraft" type="button">放弃</button>
+        </div>
+      </div>
+      <div class="card pad">
+        <div class="list-tools">
+          <input class="input" id="postSearch" placeholder="搜索标题、标签…">
+          <select class="input select" id="postCatFilter"><option value="">全部分类</option></select>
+          <select class="input select" id="postStateFilter">
+            <option value="">全部状态</option><option value="live">已发布</option><option value="draft">草稿</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th style="width:40px"></th><th>标题</th><th style="width:96px">分类</th><th style="width:108px">日期</th><th style="width:74px">状态</th><th style="width:150px">操作</th></tr></thead>
+            <tbody id="postTbody"></tbody>
+          </table>
+          <p class="empty" id="postEmpty" hidden>还没有文章，点右上角「新建文章」开始写吧。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 文章编辑 -->
+    <section class="view" data-view="post-edit" hidden>
+      <div class="edit-grid">
+        <div class="card pad">
+          <label class="field"><span class="field-label">标题 <i>*</i></span><input class="input lg" id="fTitle" placeholder="给文章起个标题"></label>
+          <label class="field"><span class="field-label">摘要 <small>列表卡片里显示的简介</small></span><textarea class="input" id="fSummary" rows="2" placeholder="一两句话说明这篇文章讲什么"></textarea></label>
+          <div class="field">
+            <span class="field-label">正文 <i>*</i> <small>支持 Markdown，也支持直接粘贴 HTML</small></span>
+            <div class="md-bar">
+              <button type="button" data-md="h2">标题</button>
+              <button type="button" data-md="h3">小标题</button>
+              <button type="button" data-md="bold">加粗</button>
+              <button type="button" data-md="quote">引用</button>
+              <button type="button" data-md="ul">列表</button>
+              <button type="button" data-md="ol">编号</button>
+              <button type="button" data-md="code">代码</button>
+              <button type="button" data-md="link">链接</button>
+              <button type="button" data-md="img">图片</button>
+              <span class="md-status" id="wordCount">0 字</span>
+            </div>
+            <textarea class="input code-area" id="fContent" rows="24" spellcheck="false" placeholder="从这里开始写……"></textarea>
+          </div>
+          <div class="preview-box" id="previewBox" hidden>
+            <div class="preview-head"><span>预览</span><button class="ghost small" type="button" id="closePreview">收起</button></div>
+            <div class="prose" id="previewBody"></div>
+          </div>
+        </div>
+        <aside class="edit-side">
+          <div class="card pad">
+            <label class="field"><span class="field-label">链接地址（slug）</span>
+              <div class="row">
+                <input class="input" id="fSlug" placeholder="自动生成">
+                <button class="ghost small" type="button" id="genSlug">生成</button>
+              </div>
+            </label>
+            <label class="field"><span class="field-label">封面图地址</span>
+              <input class="input" id="fCover" placeholder="assets/covers/xxx.svg 或 https://…">
+            </label>
+            <label class="field"><span class="field-label">分类</span>
+              <input class="input" id="fCategory" list="catOptions" placeholder="前端 / 生活 / 阅读">
+              <datalist id="catOptions"></datalist>
+            </label>
+            <label class="field"><span class="field-label">标签 <small>逗号分隔</small></span><input class="input" id="fTags" placeholder="Vue3, 实践"></label>
+            <div class="row2">
+              <label class="field"><span class="field-label">发布日期</span><input class="input" id="fDate" type="date"></label>
+              <label class="field"><span class="field-label">更新日期</span><input class="input" id="fUpdated" type="date"></label>
+            </div>
+            <div class="row2">
+              <label class="field"><span class="field-label">阅读量</span><input class="input" id="fViews" type="number" min="0"></label>
+              <label class="field"><span class="field-label">点赞数</span><input class="input" id="fLikes" type="number" min="0"></label>
+            </div>
+            <label class="check"><input type="checkbox" id="fDraft"> <span>存为草稿（前台不显示）</span></label>
+            <label class="check"><input type="checkbox" id="fPinned"> <span>置顶</span></label>
+          </div>
+          <button class="btn-primary full" id="savePost" type="button">保存并发布</button>
+          <button class="ghost full" id="previewBtn" type="button" style="margin-top:8px">预览正文</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 说说 -->
+    <section class="view" data-view="moments" hidden>
+      <div class="card pad">
+        <div class="edit-grid" style="grid-template-columns:1fr">
+          <div>
+            <label class="field"><span class="field-label">内容</span><textarea class="input" id="mText" rows="4" placeholder="此刻想说点什么…"></textarea></label>
+            <div class="row2">
+              <label class="field"><span class="field-label">日期</span><input class="input" id="mDate" type="date"></label>
+              <label class="field"><span class="field-label">心情（可空）</span><input class="input" id="mMood" placeholder="🌤️ / 平静 / 开心"></label>
+            </div>
+            <label class="field"><span class="field-label">配图地址 <small>每行一个，可留空</small></span><textarea class="input code-area" id="mImages" rows="2" placeholder="assets/photos/p1.svg"></textarea></label>
+            <div class="row" style="justify-content:flex-end">
+              <button class="ghost" id="cancelMoment" type="button">取消编辑</button>
+              <button class="btn-primary" id="saveMoment" type="button">保存说说</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">已有说说 <span class="muted small" id="momentCount"></span></h3>
+        <div id="momentList"></div>
+      </div>
+    </section>
+
+    <!-- 相册 -->
+    <section class="view" data-view="photos" hidden>
+      <div class="card pad">
+        <div class="row2">
+          <label class="field"><span class="field-label">图片地址 <i>*</i></span><input class="input" id="pSrc" placeholder="assets/photos/xxx.jpg 或 https://…"></label>
+          <label class="field"><span class="field-label">标题 / 说明</span><input class="input" id="pTitle" placeholder="傍晚的城市"></label>
+          <label class="field"><span class="field-label">所属相册</span><input class="input" id="pAlbum" placeholder="城市与光"></label>
+          <label class="field"><span class="field-label">日期</span><input class="input" id="pDate" type="date"></label>
+        </div>
+        <div class="row" style="justify-content:flex-end">
+          <button class="ghost" id="cancelPhoto" type="button">取消编辑</button>
+          <button class="btn-primary" id="savePhoto" type="button">保存照片</button>
+        </div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">相册照片 <span class="muted small" id="photoCount"></span></h3>
+        <div class="photo-admin" id="photoList"></div>
+      </div>
+    </section>
+
+    <!-- 友链 -->
+    <section class="view" data-view="links" hidden>
+      <div class="card pad">
+        <div class="row2">
+          <label class="field"><span class="field-label">站名 <i>*</i></span><input class="input" id="lName" placeholder="友邻前端"></label>
+          <label class="field"><span class="field-label">网址 <i>*</i></span><input class="input" id="lUrl" placeholder="https://example.com"></label>
+          <label class="field"><span class="field-label">头像地址</span><input class="input" id="lAvatar" placeholder="assets/friend-1.svg"></label>
+          <label class="field"><span class="field-label">简介</span><input class="input" id="lDesc" placeholder="一句话介绍这个站"></label>
+        </div>
+        <div class="row" style="justify-content:flex-end">
+          <button class="ghost" id="cancelLink" type="button">取消编辑</button>
+          <button class="btn-primary" id="saveLink" type="button">保存友链</button>
+        </div>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">友链列表 <span class="muted small" id="linkCount"></span></h3>
+        <div id="linkList"></div>
+      </div>
+    </section>
+
+    <!-- 站点信息 -->
+    <section class="view" data-view="site" hidden>
+      <div class="card pad">
+        <h3 class="card-title">基本信息</h3>
+        <div class="row2">
+          <label class="field"><span class="field-label">站点名称</span><input class="input" id="sName"></label>
+          <label class="field"><span class="field-label">LOGO 文字（一个字）</span><input class="input" id="sMark" maxlength="2"></label>
+          <label class="field"><span class="field-label">身份 / 角色</span><input class="input" id="sRole"></label>
+          <label class="field"><span class="field-label">一句话签名</span><input class="input" id="sSlogan"></label>
+          <label class="field"><span class="field-label">坐标</span><input class="input" id="sLocation"></label>
+          <label class="field"><span class="field-label">邮箱</span><input class="input" id="sEmail"></label>
+          <label class="field"><span class="field-label">站点建立日期 <small>用于计算运行天数</small></span><input class="input" id="sStartDate" type="date"></label>
+          <label class="field"><span class="field-label">首页每页文章数</span><input class="input" id="sPageSize" type="number" min="1" max="20"></label>
+          <label class="field"><span class="field-label">头像地址</span><input class="input" id="sAvatar"></label>
+          <label class="field"><span class="field-label">个人卡片背景图</span><input class="input" id="sBanner" placeholder="可留空"></label>
+        </div>
+        <label class="field"><span class="field-label">公告</span><textarea class="input" id="sNotice" rows="2"></textarea></label>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">首页首屏</h3>
+        <div class="row2">
+          <label class="field"><span class="field-label">大标题</span><input class="input" id="sHeroTitle"></label>
+          <label class="field"><span class="field-label">背景图地址</span><input class="input" id="sHeroImage"></label>
+        </div>
+        <label class="field"><span class="field-label">轮播文字 <small>每行一句，会逐字打出</small></span><textarea class="input" id="sHeroSays" rows="3"></textarea></label>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">关于页正文 <small class="muted">支持 Markdown</small></h3>
+        <textarea class="input code-area" id="sAbout" rows="16"></textarea>
+      </div>
+      <div class="card pad">
+        <h3 class="card-title">社交链接</h3>
+        <div id="socialEditor" class="repeat"></div>
+        <button class="ghost small" type="button" id="addSocial">＋ 添加一条</button>
+      </div>
+      <button class="btn-primary" id="saveSite" type="button">保存站点信息</button>
+    </section>
+
+    <!-- 发布设置 -->
+    <section class="view" data-view="repo" hidden>
+      <div class="edit-grid">
+        <div class="card pad">
+          <h3 class="card-title">GitHub 仓库</h3>
+          <label class="field"><span class="field-label">用户名 / 组织名</span><input class="input" id="rOwner" placeholder="octocat"></label>
+          <label class="field"><span class="field-label">仓库名</span><input class="input" id="rRepo" placeholder="my-blog"></label>
+          <label class="field"><span class="field-label">分支</span><input class="input" id="rBranch" placeholder="main"></label>
+          <label class="field"><span class="field-label">个人访问令牌（Fine-grained token）</span><input class="input" id="rToken" type="password" placeholder="github_pat_…"></label>
+          <label class="check"><input type="checkbox" id="rAuto"> <span>保存时自动提交到 GitHub</span></label>
+          <div class="row" style="margin-top:14px">
+            <button class="btn-primary" id="saveRepo" type="button">保存设置</button>
+            <button class="ghost" id="testRepo" type="button">测试连接</button>
+            <button class="ghost" id="syncRepo" type="button">从仓库拉取</button>
+          </div>
+          <p class="muted small" style="margin-top:12px">令牌只保存在本浏览器（localStorage），不会写进网页，也不会提交到仓库。</p>
+        </div>
+        <aside class="edit-side">
+          <div class="card pad">
+            <h3 class="card-title">如何创建令牌</h3>
+            <ol class="steps">
+              <li>GitHub → Settings → Developer settings</li>
+              <li>Personal access tokens → <b>Fine-grained tokens</b> → Generate new token</li>
+              <li>Repository access 选 <b>Only select repositories</b>，勾选你的博客仓库</li>
+              <li>Permissions → Repository permissions → <b>Contents: Read and write</b></li>
+              <li>生成后复制到这里保存，再点「测试连接」</li>
+            </ol>
+          </div>
+          <div class="card pad danger-card">
+            <h3 class="card-title">危险操作</h3>
+            <button class="ghost full danger" id="resetLocal" type="button">清除本地缓存并重新拉取</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 说明 -->
+    <section class="view" data-view="help" hidden>
+      <div class="help-grid">
+        <article class="card pad">
+          <h3 class="card-title">1. 先改登录口令</h3>
+          <p class="muted">在站点目录运行下面的命令，把输出替换到 <code>js/admin-config.js</code> 的 <code>PASSWORD_HASH</code>：</p>
+          <pre class="code-block">node tools/hash-password.js 你的新口令</pre>
+        </article>
+        <article class="card pad">
+          <h3 class="card-title">2. 连接你的仓库</h3>
+          <p class="muted">到「发布设置」填好用户名、仓库名、分支和令牌，保存后点「测试连接」。看到成功后，之后所有修改都会自动提交。</p>
+        </article>
+        <article class="card pad">
+          <h3 class="card-title">3. 写文章</h3>
+          <p class="muted">文章管理 → 新建文章 → 填标题和正文（Markdown）→ 保存并发布。文章列表、时间轴、分类、标签、搜索都会自动更新。</p>
+        </article>
+        <article class="card pad">
+          <h3 class="card-title">4. 说说 / 相册 / 友链</h3>
+          <p class="muted">左侧菜单分别管理。每一条都可以编辑和删除，改动同样是一次 Git 提交。</p>
+        </article>
+        <article class="card pad">
+          <h3 class="card-title">5. 图片怎么放</h3>
+          <p class="muted">把图片上传到仓库的 <code>assets/</code> 目录，然后在正文里写 <code>![说明](assets/图片名.jpg)</code>，或在「封面图地址」里填路径。</p>
+        </article>
+        <article class="card pad">
+          <h3 class="card-title">6. 本地预览</h3>
+          <p class="muted">直接双击 HTML 会被浏览器拦截数据读取，请在站点目录运行：</p>
+          <pre class="code-block">node tools/serve.js</pre>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <h3 id="modalTitle">确认操作</h3>
+    <p id="modalText"></p>
+    <div class="modal-actions">
+      <button class="ghost" id="modalCancel" type="button">取消</button>
+      <button class="btn-primary danger" id="modalOk" type="button">确定</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/admin-config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

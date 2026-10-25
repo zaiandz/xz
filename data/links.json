@@ -1,0 +1,40 @@
+{
+  "links": [
+    {
+      "name": "友邻前端",
+      "avatar": "assets/friend-1.svg",
+      "url": "https://example.com",
+      "desc": "一个专注前端工程化的技术博客，写得很扎实。"
+    },
+    {
+      "name": "码农小站",
+      "avatar": "assets/friend-2.svg",
+      "url": "https://example.com",
+      "desc": "Node 与全栈方向，笔记做得很细。"
+    },
+    {
+      "name": "读书笔记",
+      "avatar": "assets/friend-3.svg",
+      "url": "https://example.com",
+      "desc": "每周更新一本书的读书笔记。"
+    },
+    {
+      "name": "光影相册",
+      "avatar": "assets/friend-4.svg",
+      "url": "https://example.com",
+      "desc": "街头与城市摄影，照片很有味道。"
+    },
+    {
+      "name": "设计手记",
+      "avatar": "assets/friend-5.svg",
+      "url": "https://example.com",
+      "desc": "UI 与设计系统的实践记录。"
+    },
+    {
+      "name": "旅行日记",
+      "avatar": "assets/friend-6.svg",
+      "url": "https://example.com",
+      "desc": "一个人走过的城市，写到哪算哪。"
+    }
+  ]
+}

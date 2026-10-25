@@ -1,0 +1,146 @@
+{
+  "posts": [
+    {
+      "slug": "vue3-composition-api-practice",
+      "title": "Vue3 组合式 API 实战：把复杂页面拆成可复用的 composable",
+      "date": "2026-10-21",
+      "updated": "2026-10-23",
+      "category": "前端",
+      "tags": [
+        "Vue3",
+        "TypeScript",
+        "实践"
+      ],
+      "cover": "assets/covers/vue3.svg",
+      "pinned": true,
+      "views": 1284,
+      "likes": 96,
+      "summary": "组合式 API 真正好用的地方，不是 setup 语法糖，而是你能把「状态 + 逻辑」打成一个个可测试、可复用的小函数。这篇文章用三个真实场景说明怎么拆。",
+      "content": "<p>从选项式 API 迁移到组合式 API 之后，很多人的写法其实是「选项式 API 换了个壳」：把所有逻辑堆在 <code>setup</code> 里，组件反而更长了。</p>\n<p>真正让组合式 API 好用的，是 <strong>composable</strong>：把一段独立的逻辑抽成函数，输入是参数，输出是响应式状态和操作。</p>\n<h2>一、什么适合抽成 composable</h2>\n<ul>\n<li>多个组件都要用的业务逻辑（分页、搜索、上传）</li>\n<li>有完整生命周期的逻辑（滚动监听、轮询、拖动）</li>\n<li>需要独立测试的逻辑</li>\n</ul>\n<h2>二、分页的场景</h2>\n<p>列表页几乎都需要分页，写一个 <code>usePagination</code> 就够了：</p>\n<pre><code>export function usePagination(fetcher, options = {}) {\n  const page = ref(1);\n  const size = ref(options.size || 10);\n  const total = ref(0);\n  const list = ref([]);\n  const loading = ref(false);\n\n  async function load() {\n    loading.value = true;\n    try {\n      const res = await fetcher({ page: page.value, size: size.value });\n      list.value = res.list;\n      total.value = res.total;\n    } finally {\n      loading.value = false;\n    }\n  }\n\n  function go(n) {\n    page.value = n;\n    load();\n  }\n\n  onMounted(load);\n  return { page, size, total, list, loading, load, go };\n}</code></pre>\n<h2>三、几个容易踩的坑</h2>\n<ol>\n<li>不要在 composable 里直接操作 DOM，除非它确实和 DOM 生命周期绑定。</li>\n<li>返回值要么统一返回对象，要么统一返回数组，别混用。</li>\n<li>加 <code>onScopeDispose</code> 清理定时器和事件监听，否则组件卸载后会泄漏。</li>\n</ol>\n<blockquote><p>拆 composable 的标准只有一个：这段逻辑如果离开这个组件还有意义吗？有，就抽出去。</p></blockquote>\n<h2>四、小结</h2>\n<p>组合式 API 不是写法，而是组织方式。先把一个页面的数据流画出来，再决定哪些部分可以独立成一个文件，代码会自然变短。</p>"
+    },
+    {
+      "slug": "my-daily-efficiency-system",
+      "title": "我的效率系统：三个清单和一条硬性规则",
+      "date": "2026-10-14",
+      "updated": "2026-10-15",
+      "category": "效率",
+      "tags": [
+        "效率",
+        "习惯",
+        "时间管理"
+      ],
+      "cover": "assets/covers/workflow.svg",
+      "pinned": false,
+      "views": 986,
+      "likes": 71,
+      "summary": "试过 GTD、番茄钟、各种待办 App，最后留下来的只有一个极简系统：今天、本周、以后。以及一条不能破的规则。",
+      "content": "<p>我用过的工具很多，现在只保留三个清单。</p>\n<h2>清单一：今天</h2>\n<p>最多写三件事。写第四件的时候，必须先删掉一件。这条规则坚持了两年，救回了不少被「计划」吃掉的时间。</p>\n<h2>清单二：本周</h2>\n<p>这周必须推进的事情，通常是 5 到 8 条。周一早上写一遍，周五晚上清一遍，没完成的移到「以后」。</p>\n<h2>清单三：以后</h2>\n<p>所有「哪天想做」的想法都放这里，不设日期、不排优先级。它只是一个架子的作用，让脑子安静下来。</p>\n<h2>那条硬性规则</h2>\n<blockquote><p>清单只在固定的两个时间点打开：早上开始工作前、下班前十分钟。</p></blockquote>\n<p>其余时间不打开待办工具。你会发现很多「必须马上记下来」的事，其实几分钟后就不重要了。</p>\n<h2>一点体会</h2>\n<ul>\n<li>效率工具的价值在于关掉它之后，你依然知道下一步做什么</li>\n<li>真正的瓶颈很少是时间，而是注意力的切换成本</li>\n<li>允许自己有一两天什么都不做</li>\n</ul>"
+    },
+    {
+      "slug": "a-weekend-in-hangzhou",
+      "title": "周末在杭州：一条适合发呆的路线",
+      "date": "2026-10-06",
+      "updated": "2026-10-06",
+      "category": "生活",
+      "tags": [
+        "旅行",
+        "杭州",
+        "随手记"
+      ],
+      "cover": "assets/covers/city.svg",
+      "pinned": false,
+      "views": 742,
+      "likes": 58,
+      "summary": "不做攻略的两天：早上走西湖、中午吃面、下午在咖啡馆坐三个小时。记录一些比景点更有意思的细节。",
+      "content": "<p>朋友来杭州，问我有什么推荐。我想了想，推荐的不是景点，而是一条可以发呆的路线。</p>\n<h2>早上：湖边</h2>\n<p>七点半的湖边没什么人，骑车经过，只听得见风声和鸟叫。九点之后人会多起来，所以早起是唯一值得的攻略。</p>\n<h2>中午：一碗面</h2>\n<p>巷子里的小店，只卖三种面。老板记得每个常客的口味，这种店比任何榜好看。</p>\n<h2>下午：咖啡馆</h2>\n<p>找了一家二楼靠窗的位置，带了本书。三个小时没怎么翻页，看楼下的行人和施工的架子，也挺好。</p>\n<blockquote><p>旅行最奢侈的不是去多远，而是有时间什么都不干。</p></blockquote>\n<h2>晚上：回家</h2>\n<p>九点回家，洗完澡发现走了两万三千步。累，但是那种很舒服的累。</p>"
+    },
+    {
+      "slug": "books-that-changed-my-writing",
+      "title": "三本书，改变了我写东西的方式",
+      "date": "2026-09-27",
+      "updated": "2026-09-28",
+      "category": "阅读",
+      "tags": [
+        "阅读",
+        "写作",
+        "书单"
+      ],
+      "cover": "assets/covers/books.svg",
+      "pinned": false,
+      "views": 615,
+      "likes": 44,
+      "summary": "不是写作技巧书，而是三本让我明白「写清楚」比「写漂亮」更重要的书。",
+      "content": "<p>我一直觉得写作能力不是天赋，而是可以被训练的。这三本书对我影响最大。</p>\n<h2>一、《写作这回事》</h2>\n<p>最有用的一句话是：先写完，再改好。初稿不需要好看，只需要存在。</p>\n<h2>二、《精要主义》</h2>\n<p>它讲的是选择，但对写作同样适用：一篇文章只讲一件事，其他都是噪音。</p>\n<h2>三、《金字塔原理》</h2>\n<p>结论先行、分组归类。读完之后，我的技术文档好读了很多，同事也不再问我同样的问题。</p>\n<blockquote><p>写作不是把想说的话写下来，而是帮读者把话说清楚。</p></blockquote>\n<h2>怎么读</h2>\n<p>这三本都不厚，我建议每次只挑一章，读完立刻写 300 字。读完一本忘一本，比一本都没读完要好。</p>"
+    },
+    {
+      "slug": "deploy-static-blog-with-github-pages",
+      "title": "纯静态博客怎么上线：GitHub Pages 完整流程",
+      "date": "2026-09-15",
+      "updated": "2026-09-19",
+      "category": "前端",
+      "tags": [
+        "GitHub Pages",
+        "静态站点",
+        "教程"
+      ],
+      "cover": "assets/covers/pages.svg",
+      "pinned": false,
+      "views": 1502,
+      "likes": 133,
+      "summary": "没有服务器、没有数据库，也能有一个能写作的个人博客。从建仓库到后台发布，一次讲清楚。",
+      "content": "<p>这个站点完全是静态的：HTML、CSS、JavaScript 和几个 JSON 文件。它能上线，全靠 GitHub Pages。</p>\n<h2>一、建仓库并开启 Pages</h2>\n<ol>\n<li>新建仓库，把站点的全部文件推到根目录</li>\n<li>仓库 Settings → Pages → Source 选 <code>Deploy from a branch</code></li>\n<li>分支选 <code>main</code>、目录选 <code>/ (root)</code>，保存</li>\n<li>等一分钟，访问 <code>https://用户名.github.io/仓库名/</code></li>\n</ol>\n<h2>二、路径要用相对路径</h2>\n<p>项目站点会部署在子路径下，所有资源都要用相对路径（如 <code>css/style.css</code>），不要写成 <code>/css/style.css</code>。</p>\n<h2>三、后台怎么提交</h2>\n<p>后台不用服务器，靠浏览器的 GitHub API 直接写文件：</p>\n<pre><code>PUT /repos/{owner}/{repo}/contents/data/posts.json\nAuthorization: Bearer &lt;personal access token&gt;\nBody: { \"message\": \"update posts\", \"content\": base64, \"sha\": 旧sha }</code></pre>\n<p>提交成功后 Pages 会自动重新构建，通常 30 秒内生效。</p>\n<h2>四、令牌只给最小权限</h2>\n<p>用 Fine-grained token，只勾选这一个仓库的 <strong>Contents: Read and write</strong>，并且只保存在你自己的浏览器里。</p>\n<blockquote><p>静态不等于不能编辑，只是编辑发生在你自己的浏览器里，而不是服务器上。</p></blockquote>"
+    },
+    {
+      "slug": "notes-on-reading-2026",
+      "title": "2026 上半年的读书笔记（节选）",
+      "date": "2026-08-30",
+      "updated": "2026-08-30",
+      "category": "阅读",
+      "tags": [
+        "阅读",
+        "笔记"
+      ],
+      "cover": "assets/covers/books.svg",
+      "pinned": false,
+      "views": 388,
+      "likes": 21,
+      "summary": "把上半年读过的书里划线的句子抽出来，只留真正会想起的那几句。",
+      "content": "<p>读完就忘是常态。所以我只做一件事：把会反复想起的句子单独记一行。</p>\n<h2>关于工作</h2>\n<ul>\n<li>把时间花在「做完了会被看见」的事情上</li>\n<li>慢一点做决定，快一点做执行</li>\n</ul>\n<h2>关于生活</h2>\n<ul>\n<li>热爱生活的人，不会把日子过成待办事项</li>\n<li>休息不是浪费，是让之后的每一小时更值钱</li>\n</ul>\n<h2>关于写作</h2>\n<blockquote><p>如果你写不出一个清楚的句子，多半是因为你还没想清楚。</p></blockquote>\n<p>下半年继续记录。</p>"
+    },
+    {
+      "slug": "weekly-review-template",
+      "title": "一份可以照着做的周复盘模板",
+      "date": "2026-08-12",
+      "updated": "2026-08-14",
+      "category": "效率",
+      "tags": [
+        "复盘",
+        "习惯",
+        "模板"
+      ],
+      "cover": "assets/covers/workflow.svg",
+      "pinned": false,
+      "views": 451,
+      "likes": 33,
+      "summary": "每周日晚上花 20 分钟，回答五个问题。坚持一年之后，我做决定的犹豫少了很多。",
+      "content": "<p>复盘不是写总结，而是回答几个具体的问题。我的模板只有五条。</p>\n<h2>五个问题</h2>\n<ol>\n<li>这周最有价值的一件事是什么？</li>\n<li>这周最浪费时间的一件事是什么？</li>\n<li>有没有什么事情是「我以为重要、其实不重要」的？</li>\n<li>下周必须推进的一件事？</li>\n<li>这周身体和心情怎么样？</li>\n</ol>\n<h2>怎么写</h2>\n<p>每条一句话，不超过两行。写太多就不会坚持。</p>\n<h2>坚持一年之后</h2>\n<blockquote><p>复盘的意义不是批评自己，而是把规律找出来，下次少踩一次坑。</p></blockquote>"
+    },
+    {
+      "slug": "draft-example",
+      "title": "（草稿）还没写完的文章",
+      "date": "2026-08-01",
+      "updated": "2026-08-01",
+      "category": "随笔",
+      "tags": [
+        "草稿"
+      ],
+      "cover": "",
+      "pinned": false,
+      "draft": true,
+      "views": 0,
+      "likes": 0,
+      "summary": "这是一篇草稿，不会出现在前台，可以用来测试后台的草稿功能。",
+      "content": "<p>还在整理资料……</p>"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "site": {
+    "name": "青柠笔记",
+    "mark": "柠",
+    "role": "前端开发 / 独立写作",
+    "slogan": "写下代码，也写下生活。",
+    "heroTitle": "青柠笔记",
+    "heroImage": "assets/covers/city.svg",
+    "heroSays": [
+      "记录 Vue3 的每一行代码",
+      "也记录生活里的每一份心情",
+      "慢慢写，慢慢变成一个更好的人"
+    ],
+    "startDate": "2024-03-01",
+    "notice": "新站上线中：文章、说说、相册都可以在后台编辑，欢迎留言交流。",
+    "avatar": "assets/avatar.svg",
+    "profileBanner": "",
+    "location": "杭州",
+    "email": "hello@example.com",
+    "about": "我是青柠，一名前端开发，也是一名喜欢写字的普通人。\n\n## 我在做什么\n\n- 用 **Vue 3 + TypeScript** 写业务，喜欢把界面拆成可复用的组件\n- 维护两个小开源项目，偶尔给别人的仓库提 PR\n- 每周写一篇文章，记录踩过的坑和想明白的事\n\n## 这个博客\n\n纯静态站点，没有服务器也没有数据库：文章放在一个 JSON 文件里，页面在浏览器中渲染，通过 GitHub Pages 托管。后台写完点保存，就会自动提交到仓库，几十秒后上线。\n\n> 写下来的东西未必都要给别人看，但写下来这件事本身，总会让人清醒一点。",
+    "links": [
+      {
+        "label": "GitHub",
+        "icon": "github",
+        "url": "https://github.com"
+      },
+      {
+        "label": "邮箱",
+        "icon": "mail",
+        "url": "mailto:hello@example.com"
+      },
+      {
+        "label": "RSS",
+        "icon": "rss",
+        "url": "rss.xml"
+      }
+    ],
+    "homePageSize": 5
+  }
+}
